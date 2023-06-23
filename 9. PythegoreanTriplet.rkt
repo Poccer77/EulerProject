@@ -4,9 +4,15 @@
 
 (define (find-triplet sum)
   (local [(define start (floor(/ sum 3)))
-          (define (find-triplet a b c)
+          (define (inner-find-triplet a b)
+            (local [(define c (sqrt (+ (expt a 2) (expt b 2))))]
             (cond
-              [(> (+ a b) (* sum (/ 2 3))) (find-triplet (- a 1) a (+ a 1))]
-              [((= (pow (+ a b) 2) (pow c)) & (= (+ a b c) sum)) (* a b c)]
-              [else (find-triplet a (+ b 1) 
+              [(> (+ a b) (* sum (/ 2 3))) (inner-find-triplet (- a 1) a)]
+              [(= (+ a b c) sum) (* a b c)]
+              [else (inner-find-triplet a (+ b 1))])))]
+    (inner-find-triplet start (+ start 1)))) 
+
+(find-triplet 1000)
+
+
       

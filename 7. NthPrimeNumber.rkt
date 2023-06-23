@@ -3,13 +3,14 @@
 #reader(lib "htdp-advanced-reader.ss" "lang")((modname |7|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f () #f)))
 ;; n-th prime number
 
+(provide nth-prime)
 (define (nth-prime n)
   (local
     [(define (prime-check x lst)
         (empty? (filter (lambda (y) (= (modulo x y) 0)) lst)))
       (define (iterate x lst limit)
         (cond
-          [(= (length lst) limit) (first (reverse lst))]
+          [(= (length lst) limit) (reverse lst)]
           [(prime-check x lst) (iterate (+ x 1) (append lst (list x)) limit)]
           [else (iterate (+ x 1) lst limit)]))]
     (iterate 2 (list 2) n)))
